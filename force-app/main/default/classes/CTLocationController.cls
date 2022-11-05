@@ -11,7 +11,7 @@ public with sharing class CTLocationController {
                     Status__c 
                 FROM Location__c 
                 ORDER BY Status_Update_Date__c 
-                DESC LIMIT 100]; 
+                DESC NULLS LAST LIMIT 100]; 
     }
 
     public static List<Location__c> searchLocations(String searchTerm) {
@@ -25,10 +25,10 @@ public with sharing class CTLocationController {
                     Status__c 
                 FROM Location__c
                 WHERE Name =: searchTerm
-                OR Pincode__c =: searchTerm 
-                OR Address__c =: searchTerm 
+                    OR Pincode__c =: searchTerm 
+                    OR Address__c =: searchTerm 
                 ORDER BY Status_Update_Date__c 
-                DESC LIMIT 100];
+                DESC NULLS LAST];
     }
 
     public static Location__c getLocationById(String locationId) {
@@ -47,5 +47,15 @@ public with sharing class CTLocationController {
             return locations.get(0);
         
         return null;
+    }
+    public static Map<String, Integer> getStatusCount(){
+        Map<String, Integer> healthCountMap = new Map<String, Integer>();
+        
+        for (AggregateResult ar : [SELECT Status__c, COUNT(Id) total 
+                                    FROM Location__c 
+                                    GROUP BY Status__c]) {
+            healthCountMap.put(String.valueOf(ar.get('Status__c')), Integer.valueOf(ar.get('total')));
+        }
+        return healthCountMap;
     }
 }

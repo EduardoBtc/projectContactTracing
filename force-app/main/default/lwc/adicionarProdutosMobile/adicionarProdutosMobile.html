@@ -1,0 +1,46 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <article>
+    <lightning-card title="Adicionar Produtos" icon-name="standard:product">
+        <lightning-input type="search" label="Pesquisar produto" value={SearchKey} onchange={handleSearch}></lightning-input>
+
+    <div class="BoxFieldsProduct">
+        <table class="tableProducts">
+        <tr>
+            <td>Nome:</td>
+            <td>{ProductName}</td>
+        </tr>
+        <tr>
+            <td>Valor:</td>
+            <td>{ProductValue}</td>
+        </tr>
+        <tr>
+            <td>Familia:</td>
+            <td>{ProductFamily}</td>
+        </tr>
+        <tr>
+            <td>Quantidade:</td>
+            <td><lightning-input type="text" value={ProductQuantity} onchange={ProductQuantityAplly}></lightning-input></td>
+        </tr>
+        <tr>
+            <td>Desconto:</td>
+            <td>
+                <lightning-input type="text" value={ProductDiscount} onchange={ProductDiscountAplly}></lightning-input>
+            </td>
+        </tr>
+        </table>
+    </div>
+    <br/>
+    <div class="addProduct">
+        <lightning-button label="Adicionar produto" variant="brand" onclick={showNotification}></lightning-button>
+    </div>
+    </lightning-card>
+    <lightning-card title="Produtos adicionados" icon-name="standard:checkout">
+        <lightning-datatable key-field="Id" data={data} columns={columns} hide-checkbox-column="true" onrowaction={handleRowAction}></lightning-datatable>
+        <br/>
+        <div class="saveProducts">
+            <lightning-button label="Finalizar carrinho" variant="success" onclick={showNotification}></lightning-button>
+        </div>
+    </lightning-card>
+    </article>
+</template>
